@@ -1,0 +1,71 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{custom_config_slides}[2026/01/27 Beamer style helpers]
+
+% Packages
+\RequirePackage{graphicx,amsmath,amssymb,bm,overpic,float,enumitem,booktabs}
+\RequirePackage{tikz}
+\RequirePackage{microtype}
+\RequirePackage{colortbl,xcolor}
+
+% Theme / beamer settings (safe to keep here if this package is only for beamer)
+\usetheme{default}
+\usecolortheme{seahorse}
+\usefonttheme{serif}
+\beamertemplatenavigationsymbolsempty
+
+\setbeamertemplate{footline}[frame number]
+\setbeamersize{text margin left=0.5cm, text margin right=0.5cm}
+
+% Global list spacing defaults (override per-list if desired)
+\setlist[itemize]{itemsep=0.4em, topsep=0.2em}
+\setlist[enumerate]{itemsep=0.4em, topsep=0.2em}
+
+% Better PDF metadata + link behavior
+\hypersetup{
+  colorlinks=true,
+  linkcolor=.,
+  urlcolor=.,
+  citecolor=.,
+  pdfauthor={},
+  pdftitle={}
+}
+
+% Convenience macros
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+% Defining shortcuts
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\bo}[1]{\textbf{#1}}
+\newcommand{\ti}[1]{\textit{#1}}
+\newcommand{\bi}[1]{\textbf{\textit{#1}}}
+
+% Highlighting (text-mode; wrap math in $...$ yourself)
+\newcommand{\hl}[1]{\colorbox{yellow}{#1}}
+
+% Text color commands
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+\newcommand{\purple}[1]{\textcolor{purple}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+\newcommand{\pink}[1]{\textcolor{pink}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+\newcommand{\magenta}[1]{\textcolor{magenta}{#1}}
+
+% Quick figure macro
+% Usage: \fig[caption text]{0.8}{path/to/file}
+\newcommand{\fig}[3][]{%
+  \begin{figure}
+    \centering
+    \includegraphics[width=#2\linewidth]{#3}
+    \ifx\relax#1\relax\else\vspace{0.3em}\par{\scriptsize #1}\fi
+  \end{figure}
+}
+
+% Per-list spacing environment (optional helper)
+% Usage: \begin{itemizeS}{0.6em} ... \end{itemizeS}
+\newenvironment{itemizeS}[1]
+  {\begin{itemize}\setlength{\itemsep}{#1}}
+  {\end{itemize}}

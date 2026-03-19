@@ -1,0 +1,23 @@
+[project]
+name = "gpr-code"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "gkerr_laptop", email = "gavin.kerr@dal.ca" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "gpytorch>=1.15.1",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.1",
+    "pandas>=3.0.0",
+    "torch>=2.10.0",
+]
+
+[project.scripts]
+gpr-code = "gpr_code:main"
+
+[build-system]
+requires = ["uv_build>=0.8.13,<0.9.0"]
+build-backend = "uv_build"

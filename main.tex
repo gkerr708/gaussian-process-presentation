@@ -29,6 +29,8 @@
 	\end{figure}
 \end{frame}
 
+\section{Gaussian Process Regression}
+
 \begin{frame}{A Gaussian Process is a Distribution over Functions}
 	\begin{columns}[T]
 		\column{0.50\textwidth}
@@ -290,19 +292,34 @@
 	\begin{itemize}
 	\setlength{\itemsep}{1.4em}
 	%\item By definition of a $\mathcal{GP}$, the joint distribution of observed data and a new point $x_*$ is also Gaussian:
-	\item Sampling a $\mathcal{GP}$ at \red{X} and a new point \blue{$\mathbf{x}_*$} gives a \textbf{joint Gaussian}:
+	\item Sampling a $\mathcal{GP}$ at \red{x} and \textbf{any} new point \blue{$\mathbf{x}_*$} gives a \textbf{joint Gaussian}:
 	\begin{figure}
 		\centering
 		% Example of a two single variable gaussian distributions with a joint distribution between them.
 		\includegraphics[width=0.4\linewidth, trim=4 4 4 6, clip]{figs/joint_gaussian.png}
 		\footnote{\tiny https://en.wikipedia.org/wiki/Multivariate\_normal\_distribution}
 	\end{figure}
-	\item \red{Red:} $\mathbf{y} \sim \mathcal{N}(\mathbf{0}, k(\mathbf{x}_i,\mathbf{x}_j))$ -- Prior distribution over observed data.
-	\item \blue{Blue:} $f(\mathbf{x}_*) \sim \mathcal{N}(0, k(\mathbf{x}_*,\mathbf{x}_*))$ -- Prior distribution over new point.
-	\item \green{Green:} $p(f(\mathbf{x}_*), \mathbf{y})$ -- Joint Gaussian distribution.
-	\item \textbf{Final Result:} The conditional distribution:
 	\[
-		p(f(\mathbf{x}_*) \mid \mathbf{x}_*, X,\mathbf{y}) = \mathcal{N}(\mu_*,\sigma_*^2).
+		\begin{pmatrix}
+			\red{y} \\
+			\blue{f(x_*)}
+		\end{pmatrix}
+		\sim
+		\mathcal{N}
+		\!\left(
+		\begin{pmatrix}
+			\red{0} \\
+			\blue{0}
+		\end{pmatrix},
+		\begin{pmatrix}
+			\red{k(x,x)} & \green{k(x,x_*)} \\
+			\green{k(x_*,x)} & \blue{k(x_*,x_*)}
+		\end{pmatrix}
+		\right)
+	\]
+	\item \textbf{Final Result:} predictive mean $\mu_*$ and uncertainty $\sigma_*$:
+	\[
+		\boxed{p(f(\mathbf{x}_*) \mid \mathbf{x}_*, X,\mathbf{y}) = \mathcal{N}(\mu_*,\sigma_*^2)}
 	\]
 	\end{itemize}
 \end{frame}
@@ -340,17 +357,7 @@
 	\end{figure}
 \end{frame}
 
-
-\begin{frame}{The Acquisition Function}
-	\begin{figure}
-		\centering
-		\includegraphics[height=0.8\textheight, trim = {4 4 4 4}, clip]{figs/active_learning_example1.png}
-			\footnote{
-				\tiny
-				Shahriari, B., et al. (2016). Taking the Human Out of the Loop: A Review of Bayesian Optimization. Proceedings of the IEEE, 104(1), 148–175.
-			}
-	\end{figure}
-\end{frame}
+\section{Active Learning}
 
 \begin{frame}{Using Uncertainty to Guide Active Learning}
 	\begin{itemize}
@@ -387,6 +394,17 @@
 \end{frame}
 
 
+\begin{frame}{The Active Learning Training Loop}
+	\begin{figure}
+		\centering
+		\includegraphics[height=0.8\textheight, trim = {4 4 4 4}, clip]{figs/active_learning_example1.png}
+			\footnote{
+				\tiny
+				Shahriari, B., et al. (2016). Taking the Human Out of the Loop: A Review of Bayesian Optimization. Proceedings of the IEEE, 104(1), 148–175.
+			}
+	\end{figure}
+\end{frame}
+
 %\begin{frame}{Where would you sample next?}
 %	\begin{itemize}[label=\textbullet]
 %		\setlength{\itemsep}{0.6em}
@@ -406,19 +424,20 @@
 %	\end{figure}
 %\end{frame}
 
+\section{Example Paper}
 
 \begin{frame}{Example: ``Active-learning and materials design: the example of high glass transition temperature polymers''}
 	\begin{itemize}[label=\textbullet]
-		\setlength{\itemsep}{0.6em}
-		\item \textbf{Goal:} Find polymers with high glass transition temperature ($T_g$).
+		\setlength{\itemsep}{1.6em}
+		\item \textbf{Goal:} Find polymers with high \textbf{glass transition temperature} ($T_g$).
 		\footnote{
 			\tiny
 			Kim, C., Chandrasekaran, A., Jha, A., \& Ramprasad, R. (2019). 
 			Active-learning and materials design: The example of high glass transition temperature polymers. MRS Communications, 9(3), 860–866. 
 			%https://doi.org/10.1557/mrc.2019.78
 		}
-		\item Glassy Temperature ($T_g$) is the temperature at which a polymer transitions from a hard, glassy state to a soft, rubbery state.
-		\item Important for plastic materials used at high temperature.
+		\item $T_g$: Material transitions from a hard, glassy state to a soft, rubbery state.
+		\item Important for materials (e.g., plastics) used at high temperature.
 	\end{itemize}
 	\begin{figure}
 		\centering
@@ -429,7 +448,7 @@
 \begin{frame}{Dataset}
 	\begin{itemize}[label=\textbullet]
 		\setlength{\itemsep}{1.0em}
-		\item \textbf{Dataset:} Online repository with $N = 736$ polymers.
+		\item \textbf{Dataset:} Online repository with $736$ polymers.
 		\item \textbf{Feature set:} $D = 244$ dimensional hierarchical polymer fingerprints.
 			\vspace{0.5em}
 			\begin{itemize}
@@ -553,6 +572,7 @@
   And an extra thank you to Dr. Kreplak and the 207 office group for their help and feedback on this presentation.
 \end{frame}
 
+\section{Supplementary}
 
 \begin{frame}{A Gaussian Process is a Distribution over Functions}
 	\begin{itemize}
@@ -1070,69 +1090,89 @@ beyond local chemical bonds.
 \end{frame}
 
 
-\begin{frame}{Infinite Feature Maps are Not a Problem}
-	\begin{itemize}
-	\setlength{\itemsep}{2.0em}
-	
-	\item Recall: $\mathcal{GP}$ given by \textbf{mean} and \textbf{covariance} function.
-	
-	\item The \textbf{mean function} is\footnote{Prior: $\mathbf{w} \sim \mathcal{N}(\mathbf{0}, \sigma_w^2I)$}:
-	\[
-	m(x) = \mathbb{E}[f(x)]
-		= \boldsymbol{\phi}(x)^\top \mathbb{E}[\mathbf{w}] = 0,
-	\]
-	
-	
-	\item The \textbf{covariance function} contains \emph{all of the information}:
-	\[
-	k(x,x')
-	= \mathbb{E}\!\left[f(x)f(x')\right]
-	= \boldsymbol{\phi}(x)^\top \mathbb{E}[\mathbf{w}\mathbf{w}^\top]
-	\boldsymbol{\phi}(x')
-	= \sigma_w^2 \boldsymbol{\phi}(x)^\top \boldsymbol{\phi}(x').
-	\]
-	
-	\item We DO NOT need to compute the weights, but we DO need to compute large inner products.
-	
-	\end{itemize}
+\begin{frame}{Covariance from the Weight Prior (pt1)}
+\[
+k(x,x') = \mathbb{E}[f(x)f(x')]
+\]
+
+Using
+\[
+f(x)=\boldsymbol{\phi}(x)^\top \mathbf{w},
+\]
+we get
+\[
+k(x,x')
+= \mathbb{E}\!\left[(\boldsymbol{\phi}(x)^\top \mathbf{w})
+(\boldsymbol{\phi}(x')^\top \mathbf{w})\right].
+\]
+
+Since expectation over $\mathbf{w}$ can be written as an integral,
+\[
+k(x,x')
+=
+\int
+(\boldsymbol{\phi}(x)^\top \mathbf{w})
+(\boldsymbol{\phi}(x')^\top \mathbf{w})
+\, p(\mathbf{w})\, d\mathbf{w},
+\]
+where
+\[
+p(\mathbf{w})
+=
+\frac{1}{(2\pi \sigma_w^2)^{M/2}}
+\exp\!\left(-\frac{1}{2\sigma_w^2}\mathbf{w}^\top \mathbf{w}\right).
+\]
+
+Now rewrite the scalar product:
+\[
+(\boldsymbol{\phi}(x)^\top \mathbf{w})
+(\boldsymbol{\phi}(x')^\top \mathbf{w})
+=
+\boldsymbol{\phi}(x)^\top \mathbf{w}\mathbf{w}^\top \boldsymbol{\phi}(x').
+\]
+
 \end{frame}
+\begin{frame}{Covariance from the Weight Prior (pt2)}
 
+So
+\[
+k(x,x')
+=
+\boldsymbol{\phi}(x)^\top
+\left(
+\int \mathbf{w}\mathbf{w}^\top p(\mathbf{w})\, d\mathbf{w}
+\right)
+\boldsymbol{\phi}(x').
+\]
 
-\begin{frame}{The Kernel Trick}
-	\begin{itemize}
-	\setlength{\itemsep}{1.2em}
-	
-	\item Chose a specific feature map (there are other options):
-	\[
-	\boldsymbol{\phi}(x) =
-	\left(
-	1,\,
-	x,\,
-	\frac{x^2}{\sqrt{2!}},\,
-	\frac{x^3}{\sqrt{3!}},\,
-	\ldots
-	\right).
-	\]
-	
-	\item The kernel becomes
-	
-	\[
-	k(x,x') =
-	\boldsymbol{\phi}(x)^\top \boldsymbol{\phi}(x')
-	=
-	\sum_{n=0}^{\infty} \frac{(x x')^n}{n!}.
-	\]
-	
-	\item This is the Taylor expansion of the exponential function:
-	
-	\[
-	k(x,x') = e^{x x'}.
-	\]
-	
-	\item Simple to compute but retains complexity.
-	
-	\end{itemize}
+But
+\[
+\int \mathbf{w}\mathbf{w}^\top p(\mathbf{w})\, d\mathbf{w}
+=
+\mathbb{E}[\mathbf{w}\mathbf{w}^\top]
+=
+\sigma_w^2 I,
+\]
+because
+\[
+\mathbf{w}\sim \mathcal N(0,\sigma_w^2 I).
+\]
+
+Therefore,
+\[
+k(x,x')
+=
+\boldsymbol{\phi}(x)^\top (\sigma_w^2 I)\boldsymbol{\phi}(x')
+=
+\sigma_w^2\, \boldsymbol{\phi}(x)^\top \boldsymbol{\phi}(x').
+\]
+
+Thus,
+\[
+\boxed{
+k(x,x')=\sigma_w^2\, \boldsymbol{\phi}(x)^\top \boldsymbol{\phi}(x')
+}
+\]
 \end{frame}
-
 
 \end{document}

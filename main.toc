@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Gaussian Process Regression}{3}{0}{1}
+\beamer@sectionintoc {2}{Active Learning}{10}{0}{2}
+\beamer@sectionintoc {3}{Example Paper}{12}{0}{3}
+\beamer@sectionintoc {4}{Supplementary}{19}{0}{4}
